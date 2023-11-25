@@ -24,3 +24,13 @@ app.use(express.json());
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+
+app.use((err,req,res,next) => {
+	const statuscode = err.statusCode || 500;
+	const errorMessage = err.message || 'Internal serval error';
+	return res.status(statuscode).json({
+		sucess: "will happen",
+		statuscode,
+		errorMessage,
+	});
+} )

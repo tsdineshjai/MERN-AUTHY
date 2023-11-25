@@ -1,7 +1,7 @@
 import User from "../models/user.modal.js";
 import bcryptjs from "bcryptjs";
 
-const signup = async (req, res) => {
+const signup = async (req, res, next) => {
 	console.log(req.body);
 	const { username, email, password } = req.body;
 	const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -10,7 +10,7 @@ const signup = async (req, res) => {
 		await newUser.save();
 		res.status(201).json({ Status: "message succesfuly saved" });
 	} catch (error) {
-		res.status(500).json({ status: "duplicate username has been detected" });
+		next(error);
 	}
 };
 
